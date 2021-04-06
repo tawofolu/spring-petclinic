@@ -3,6 +3,7 @@ kind: Workload
 metadata:
   name: spring-petclinic
   labels:
+    app.kubernetes.io/name: spring-petclinic
     app.tanzu.vmware.com/workload-type: web
 spec:
   git:
