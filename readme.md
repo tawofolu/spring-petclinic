@@ -3,6 +3,17 @@
 ## Understanding the Spring Petclinic application with a few diagrams
 <a href="https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application">See the presentation here</a>
 
+##Running on Kubernetes
+git clone https://github.com/spring-projects/spring-petclinic.git
+cd spring-petclinic
+./mvnw package
+docker build --build-arg JAR_FILE=target/*.jar -t oawofolu/spring-petclinic:1.0 .
+docker push oawofolu/spring-petclinic:1.0
+kubectl create deployment petclinic-app --image=oawofolu/spring-petclinic:1.0 --replicas=2
+kubectl expose deployment/petclinic-app --name petclinic-app --port=8080 --type=ClusterIP
+kubectl rollout restart deploy/petclinic-app && kubectl rollout status -w deployment/petclinic-app
+
+
 ## Running petclinic locally
 Petclinic is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Maven](https://spring.io/guides/gs/maven/). You can build a jar file and run it from the command line:
 
